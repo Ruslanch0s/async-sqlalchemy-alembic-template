@@ -1,24 +1,33 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float, and_, select
 
 from db.database import async_db_session, Base
+from db.root_methods import RootMethods
 
 
-class Book(Base):
+class Book(Base, RootMethods):
     __tablename__ = "books"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(length=100), nullable=False)
+    market = Column(String(length=100))
+    name = Column(String(length=100))
 
-    def __init__(self, name: str):
+    def __init__(self, market: str, name: str):
+        self.market = market
         self.name = name
 
-    async def create_me(self):
+    @classmethod
+    async def get_all_markets(cls):
+        """
+        :return: (['market'],)
+        """
         async with async_db_session() as session:
-            session.add(self)
-            await session.commit()
+            sql = select(cls.market).distinct(cls.market)
+            result = await session.execute(sql)
+        return result.fetchall()
 
-    @staticmethod
-    async def create_some(objects: list):
+    @classmethod
+    async def get_market_books(cls, market: str):
         async with async_db_session() as session:
-            session.add_all(objects)
-            await session.commit()
+            sql = select(cls).where(cls.market == market)
+            result = await session.execute(sql)
+        return result.fetchall()

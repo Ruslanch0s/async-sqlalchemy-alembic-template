@@ -5,14 +5,12 @@ Base = declarative_base()
 
 
 class AsyncDatabaseSession:
-    _engine = None
-    _async_db_session = None
-
     def __init__(self):
-        self._engine = create_async_engine("postgresql+asyncpg://postgres:bezeq123@localhost:5432/postgres",
-                                           echo=True,
-                                           future=True
-                                           )
+        self._engine = create_async_engine(
+            "postgresql+asyncpg://postgres:bezeq123@localhost:5432/postgres",
+            echo=False,
+            future=True
+        )
         self._async_db_session = sessionmaker(
             self._engine, expire_on_commit=False, class_=AsyncSession
         )
