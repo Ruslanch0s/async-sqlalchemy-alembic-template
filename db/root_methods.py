@@ -17,7 +17,7 @@ class RootMethods:
 
     @classmethod
     async def delete_all(cls):
-        async with cfg.async_db_session() as session:
+        async with cfg.db.async_session() as session:
             sql = delete(cls)
             await session.execute(sql)
             await session.commit()

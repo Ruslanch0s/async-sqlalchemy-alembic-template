@@ -21,6 +21,7 @@ async def async_main():
         book = row[0]
         print(book.name, ':', book.market)
 
+    await Book.delete_all()
 
 if __name__ == '__main__':
     asyncio.run(async_main())
