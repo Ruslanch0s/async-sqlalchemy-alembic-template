@@ -1,14 +1,12 @@
 import asyncio
 
-from sqlalchemy.orm import Query
-
-from db.database import async_db_session
+from config import cfg
 from db.models.book import Book
 
 
 async def async_main():
-    await async_db_session.drop_all_tables()
-    await async_db_session.create_all_tables()
+    await cfg.db.async_session.drop_all_tables()
+    await cfg.db.async_session.create_all_tables()
 
     b1 = Book(market='читай город', name='тайная комната')
     await b1.create_me()

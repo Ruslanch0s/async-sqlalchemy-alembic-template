@@ -1,5 +1,7 @@
 from pydantic import BaseSettings
 
+from db.database import AsyncDatabaseSession
+
 
 class DataBase(BaseSettings):
     user: str
@@ -7,11 +9,12 @@ class DataBase(BaseSettings):
     host: str
     port: int
     name: str
-    url: str
+    async_session: AsyncDatabaseSession
 
     @property
-    def url(self):
-        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+    def async_session(self):
+        url = f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+        return AsyncDatabaseSession(url)
 
 
 class Settings(BaseSettings):
