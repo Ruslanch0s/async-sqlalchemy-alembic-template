@@ -1,13 +1,15 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
+from config import cfg
+
 Base = declarative_base()
 
 
 class AsyncDatabaseSession:
     def __init__(self):
         self._engine = create_async_engine(
-            "postgresql+asyncpg://postgres:bezeq123@localhost:5432/postgres",
+            cfg.db.url,
             echo=False,
             future=True
         )
