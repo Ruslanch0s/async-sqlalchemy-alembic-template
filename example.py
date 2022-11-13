@@ -5,7 +5,7 @@ from db.models.book import Book
 
 
 async def async_main():
-    await cfg.db.async_session.drop_all_tables()
+    # await cfg.db.async_session.drop_all_tables()
     await cfg.db.async_session.create_all_tables()
 
     b1 = Book(market='читай город', name='тайная комната')
@@ -22,6 +22,7 @@ async def async_main():
         print(book.name, ':', book.market)
 
     await Book.delete_all()
+
 
 if __name__ == '__main__':
     asyncio.run(async_main())

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, select
 
 from config import cfg
-from db.database import Base
+from db.base import Base
 from db.root_methods import RootMethods
 
 

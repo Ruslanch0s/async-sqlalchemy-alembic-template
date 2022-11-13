@@ -9,12 +9,21 @@ class DataBase(BaseSettings):
     host: str
     port: int
     name: str
-    async_session: AsyncDatabaseSession
+    async_url: str
+    sync_url: str
+    # async_session: AsyncDatabaseSession
+
+    @property
+    def async_url(self):
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+
+    @property
+    def sync_url(self):
+        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
     @property
     def async_session(self):
-        url = f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
-        return AsyncDatabaseSession(url)
+        return AsyncDatabaseSession(self.async_url)
 
 
 class Settings(BaseSettings):
