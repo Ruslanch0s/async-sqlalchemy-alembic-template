@@ -1,4 +1,10 @@
-from root dir:
-$ alembic revision --autogenerate -m "migration name"
-$ alembic upgrade head
-!!!! add new model to __init__ !!!
+# Alembic
+
+- Add new models to __init__ !
+
+- Run from root dir!
+
+### Make migrations
+    alembic revision --autogenerate -m "migration name"
+### Migrate
+    alembic upgrade head
